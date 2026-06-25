@@ -3,7 +3,7 @@
 	"author": "Paul Williams",
 	"version": "0.1.0",
 	"name": "@paulio/array-util-js",
-	"description": "Personalised collection of functions for manipulating and querying JavaScript arrays",
+	"description": "P102: Personalised collection of functions for manipulating and querying JavaScript arrays",
 	"keywords": [
 		"utility",
 		"javascript"
