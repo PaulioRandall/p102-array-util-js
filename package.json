@@ -1,0 +1,32 @@
+{
+	"license": "MIT",
+	"author": "Paul Williams",
+	"version": "0.1.0",
+	"name": "@paulio/array-util-js",
+	"description": "Personalised collection of functions for manipulating and querying JavaScript arrays",
+	"keywords": [
+		"utility",
+		"javascript"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/PaulioRandall/p102-array-util-js.git"
+	},
+	"type": "module",
+	"engines": {
+		"node": ">=24"
+	},
+	"main": "src/index.js",
+	"exports": {
+		".": "./src/index.js"
+	},
+	"scripts": {
+		"fmt": "prettier --log-level warn --write .",
+		"test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --passWithNoTests --testPathPatterns ./src/",
+		"audit": "npm run fmt && npm run test && cat ./ready-to-integrate.txt"
+	},
+	"devDependencies": {
+		"jest": "30.4.2",
+		"prettier": "3.8.4"
+	}
+}
