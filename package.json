@@ -16,9 +16,9 @@
 		"type": "git",
 		"url": "https://github.com/PaulioRandall/p102-array-util-js.git"
 	},
-	"main": "src/index.js",
+	"main": "src/ArrayUtil.js",
 	"exports": {
-		".": "./src/index.js"
+		".": "./src/ArrayUtil.js"
 	},
 	"scripts": {
 		"fmt": "prettier --log-level warn --write .",
