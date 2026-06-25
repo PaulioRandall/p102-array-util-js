@@ -1,5 +1,13 @@
+function isObject(v) {
+	return (
+		typeof v === 'object' && //
+		!Array.isArray(v) &&
+		v !== null
+	)
+}
+
 function err(msg) {
-	return new Error(`[ArrayUtilJS] ${msg}`)
+	return new Error(`[ArrayUtil] ${msg}`)
 }
 
 // beforeLast returns the item second from last, or null
@@ -37,7 +45,7 @@ function clear(array) {
 // item is found.
 function findByField(array, field, value) {
 	for (const item of array) {
-		if (typeof item !== 'object') {
+		if (!isObject(item)) {
 			continue
 		}
 
@@ -111,6 +119,28 @@ function lastIndex(array) {
 	return array.length - 1
 }
 
+// mapToField is a mapper returning the value of $field for
+// all objects with a $field as an own property.
+// Non-objects and objects without a $field property are
+// skipped. This means the resultant array will be equal to
+// or smaller than the $array, it may even have a length of
+// zero.
+function mapToField(array, field) {
+	const result = []
+
+	for (const item of array) {
+		if (!isObject(item)) {
+			continue
+		}
+
+		if (Object.hasOwn(item, field)) {
+			result.push(item[field])
+		}
+	}
+
+	return result
+}
+
 // remove deletes $item from $array, if it exists. $item is
 // returned.
 function remove(array, item) {
@@ -161,6 +191,7 @@ export default {
 	itemBefore,
 	last,
 	lastIndex,
+	mapToField,
 	remove,
 	replace,
 	withinRange,

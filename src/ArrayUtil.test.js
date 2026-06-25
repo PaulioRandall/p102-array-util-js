@@ -14,6 +14,7 @@ const {
 	itemBefore,
 	last,
 	lastIndex,
+	mapToField,
 	remove,
 	replace,
 	withinRange,
@@ -24,24 +25,33 @@ const B = 'B'
 const C = 'C'
 const D = 'D'
 
-test('beforeLast() returns null for list with 1 item', () => {
-	const exp = beforeLast([A])
-	expect(exp).toEqual(null)
+const ObjA = { name: 'A', position: 1 }
+const ObjB = { name: 'B' }
+const ObjC = { name: 'C' }
+const ObjD = { name: 'D', position: 4 }
+
+describe('beforeLast()', () => {
+	test('returns null for list with 1 item', () => {
+		const exp = beforeLast([A])
+		expect(exp).toEqual(null)
+	})
+
+	test('returns correct item', () => {
+		const exp = beforeLast([A, B, C])
+		expect(exp).toEqual(B)
+	})
 })
 
-test('beforeLast() returns correct item', () => {
-	const exp = beforeLast([A, B, C])
-	expect(exp).toEqual(B)
-})
+describe('beforeLastIndex()', () => {
+	test('returns -1 for list with 1 item', () => {
+		const exp = beforeLastIndex([A])
+		expect(exp).toEqual(-1)
+	})
 
-test('beforeLastIndex() returns -1 for list with 1 item', () => {
-	const exp = beforeLastIndex([A])
-	expect(exp).toEqual(-1)
-})
-
-test('beforeLastIndex() returns 2 for list with 4 items', () => {
-	const exp = beforeLastIndex([A, B, C, D])
-	expect(exp).toEqual(2)
+	test('returns 2 for list with 4 items', () => {
+		const exp = beforeLastIndex([A, B, C, D])
+		expect(exp).toEqual(2)
+	})
 })
 
 test('callAll() calls all functions', () => {
@@ -100,94 +110,129 @@ test('itemAfter()', () => {
 	expect(itemAfter(list, D)).toEqual(null)
 })
 
-test('insert() puts item in correct place', () => {
-	const list = [A, C]
-	insert(list, 1, B)
-	expect(list).toEqual([A, B, C])
+describe('insert()', () => {
+	test('puts item in correct place', () => {
+		const list = [A, C]
+		insert(list, 1, B)
+		expect(list).toEqual([A, B, C])
+	})
+
+	test('puts item at end of list', () => {
+		const list = [A, B]
+		insert(list, 2, C)
+		expect(list).toEqual([A, B, C])
+	})
+
+	test('throws if index is out of bounds', () => {
+		const f = () => insert([A, C], 5, B)
+		expect(f).toThrow(Error)
+	})
 })
 
-test('insert() puts item at end of list', () => {
-	const list = [A, B]
-	insert(list, 2, C)
-	expect(list).toEqual([A, B, C])
+describe('insertAfter()', () => {
+	test('puts item in correct place', () => {
+		const list = [A, C]
+		insertAfter(list, A, B)
+		expect(list).toEqual([A, B, C])
+	})
+
+	test('throws if ref item not in list', () => {
+		const f = () => insertAfter([A, C], D, B)
+		expect(f).toThrow(Error)
+	})
 })
 
-test('insert() throws if index is out of bounds', () => {
-	const f = () => insert([A, C], 5, B)
-	expect(f).toThrow(Error)
-})
-test('insertAfter() puts item in correct place', () => {
-	const list = [A, C]
-	insertAfter(list, A, B)
-	expect(list).toEqual([A, B, C])
-})
+describe('insertBefore()', () => {
+	test('puts item in correct place', () => {
+		const list = [A, C]
+		insertBefore(list, C, B)
+		expect(list).toEqual([A, B, C])
+	})
 
-test('insertAfter() throws if ref item not in list', () => {
-	const f = () => insertAfter([A, C], D, B)
-	expect(f).toThrow(Error)
+	test('throws if ref item not in list', () => {
+		const f = () => insertBefore([A, C], D, B)
+		expect(f).toThrow(Error)
+	})
 })
 
-test('insertBefore() puts item in correct place', () => {
-	const list = [A, C]
-	insertBefore(list, C, B)
-	expect(list).toEqual([A, B, C])
+describe('last()', () => {
+	test('returns null for empty list', () => {
+		const exp = last([])
+		expect(exp).toEqual(null)
+	})
+
+	test('returns correct item', () => {
+		const exp = last([A, B, C])
+		expect(exp).toEqual(C)
+	})
 })
 
-test('insertBefore() throws if ref item not in list', () => {
-	const f = () => insertBefore([A, C], D, B)
-	expect(f).toThrow(Error)
+describe('mapToField()', () => {
+	test('returns all mapped values', () => {
+		const given = [ObjA, ObjB, ObjC, ObjD]
+		const exp = mapToField(given, 'name')
+		expect(exp).toEqual(['A', 'B', 'C', 'D'])
+	})
+
+	test('returns only own property values', () => {
+		const given = [ObjA, ObjB, ObjC, ObjD]
+		const exp = mapToField(given, 'position')
+		expect(exp).toEqual([1, 4])
+	})
+
+	test('ignores non-objects', () => {
+		const given = [ObjA, ObjB, 3, ['Four', 'Five']]
+		const exp = mapToField(given, 'name')
+		expect(exp).toEqual(['A', 'B'])
+	})
 })
 
-test('last() returns null for empty list', () => {
-	const exp = last([])
-	expect(exp).toEqual(null)
+describe('remove()', () => {
+	test('remove correct item', () => {
+		const list = [A, B, C]
+		remove(list, B)
+		expect(list).toEqual([A, C])
+	})
+
+	test('remove nothing when item not in list', () => {
+		const list = [A, B, C]
+		remove(list, D)
+		expect(list).toEqual([A, B, C])
+	})
 })
 
-test('last() returns correct item', () => {
-	const exp = last([A, B, C])
-	expect(exp).toEqual(C)
+describe('replace()', () => {
+	test('swaps correct items', () => {
+		const list = [A, B, C]
+		replace(list, C, D)
+		expect(list).toEqual([A, B, D])
+	})
+
+	test('throws if current item is not in list', () => {
+		const f = () => replace([A, B], D, C)
+		expect(f).toThrow(Error)
+	})
 })
 
-test('remove() remove correct item', () => {
-	const list = [A, B, C]
-	remove(list, B)
-	expect(list).toEqual([A, C])
-})
+describe('withinRange()', () => {
+	test('with length excluded', () => {
+		const f = (i) => withinRange([A, B, C], i)
 
-test('remove() remove nothing when item not in list', () => {
-	const list = [A, B, C]
-	remove(list, D)
-	expect(list).toEqual([A, B, C])
-})
+		expect(f(-1)).toEqual(false)
+		expect(f(0)).toEqual(true)
+		expect(f(1)).toEqual(true)
+		expect(f(2)).toEqual(true)
+		expect(f(3)).toEqual(false)
+	})
 
-test('replace() swaps correct items', () => {
-	const list = [A, B, C]
-	replace(list, C, D)
-	expect(list).toEqual([A, B, D])
-})
+	test('with length included', () => {
+		const f = (i) => withinRange([A, B, C], i, true)
 
-test('replace() throws if current item is not in list', () => {
-	const f = () => replace([A, B], D, C)
-	expect(f).toThrow(Error)
-})
-
-test('withinRange() with length excluded', () => {
-	const f = (i) => withinRange([A, B, C], i)
-
-	expect(f(-1)).toEqual(false)
-	expect(f(0)).toEqual(true)
-	expect(f(1)).toEqual(true)
-	expect(f(2)).toEqual(true)
-	expect(f(3)).toEqual(false)
-})
-
-test('withinRange() with length included', () => {
-	const f = (i) => withinRange([A, B, C], i, true)
-
-	expect(f(-1)).toEqual(false)
-	expect(f(0)).toEqual(true)
-	expect(f(1)).toEqual(true)
-	expect(f(2)).toEqual(true)
-	expect(f(3)).toEqual(true)
-	expect(f(4)).toEqual(false)
+		expect(f(-1)).toEqual(false)
+		expect(f(0)).toEqual(true)
+		expect(f(1)).toEqual(true)
+		expect(f(2)).toEqual(true)
+		expect(f(3)).toEqual(true)
+		expect(f(4)).toEqual(false)
+	})
 })
