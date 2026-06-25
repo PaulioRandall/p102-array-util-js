@@ -5,6 +5,7 @@ const {
 	beforeLastIndex,
 	callAll,
 	clear,
+	// delete,
 	findByField,
 	insert,
 	insertAfter,
