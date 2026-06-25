@@ -6,12 +6,32 @@
 
 Personalised collection of functions for manipulating and querying JavaScript arrays.
 
-## Usage
+**API Documentation is in the _[/src](./src)_.**
 
-> API Documentation is in the source: _[/src](./src)_.
+## Usage 1: Import from NPM
 
-_Copy+paste_ files from _[/src](./src)_ into your project. Tests are written in [Jest](https://jestjs.io/) but easy to adapt or rewrite for your framework.
+**package.json**
 
-## Solutions for Corporate Environments
+```json
+{
+	"dependencies": {
+		"@paulio/array-util-js": "0.1.0"
+	}
+}
+```
+
+**my-script.js**
+
+```js
+import ArrayUtil from '@paulio/array-util-js'
+
+// ...
+```
+
+## Usage 2: Copy & Paste
+
+_Copy & paste_ files from _[/src](./src)_ into your project. Tests are written in [Jest](https://jestjs.io/) but should be easy to adapt or rewrite for whatever testing framework.
+
+## Alternative Libraries
 
 - [Lodash](https://lodash.com/docs)
