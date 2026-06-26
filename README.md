@@ -6,7 +6,7 @@
 
 Personalised collection of functions for manipulating and querying JavaScript arrays.
 
-**API Documentation is in the _[/src](./src)_.**
+**API Documentation is in _[/src](./src)_.**
 
 ## Usage 1: Import from NPM
 
