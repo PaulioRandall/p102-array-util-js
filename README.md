@@ -6,9 +6,9 @@
 
 Personalised collection of functions for manipulating and querying JavaScript arrays.
 
-**API Documentation is in _[/src](./src)_.**
+**API Documentation in _[/src](./src)_.**
 
-## Usage 1: Import from NPM
+## Import from NPM
 
 **package.json**
 
@@ -28,7 +28,7 @@ import ArrayUtil from '@paulio/array-util-js'
 // ...
 ```
 
-## Usage 2: Copy & Paste
+## Copy & Paste
 
 _Copy & paste_ files from _[/src](./src)_ into your project. Tests are written in [Jest](https://jestjs.io/) but should be easy to adapt or rewrite for whatever testing framework.
 
