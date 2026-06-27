@@ -28,7 +28,7 @@ import ArrayUtil from '@paulio/array-util-js'
 // ...
 ```
 
-## Copy & Paste
+## Made to be Plundered
 
 _Copy & paste_ files from _[/src](./src)_ into your project. Tests are written in [Jest](https://jestjs.io/) but should be easy to adapt or rewrite for whatever testing framework.
 
