@@ -1,4 +1,5 @@
-import ArrayUtil from './ArrayUtil.js'
+import { describe, expect, test } from '@jest/globals'
+import ArrayUtil from './ArrayUtil.ts'
 
 const {
 	beforeLast, //
@@ -20,15 +21,22 @@ const {
 	withinRange,
 } = ArrayUtil
 
-const A = 'A'
-const B = 'B'
-const C = 'C'
-const D = 'D'
+type TestStr = string
+interface TestObj {
+	name: string
+	position?: number
+}
+type TestValue = TestStr | TestObj
 
-const ObjA = { name: 'A', position: 1 }
-const ObjB = { name: 'B' }
-const ObjC = { name: 'C' }
-const ObjD = { name: 'D', position: 4 }
+const A: TestStr = 'A'
+const B: TestStr = 'B'
+const C: TestStr = 'C'
+const D: TestStr = 'D'
+
+const ObjA: TestObj = { name: 'A', position: 1 }
+const ObjB: TestObj = { name: 'B' }
+const ObjC: TestObj = { name: 'C' }
+const ObjD: TestObj = { name: 'D', position: 4 }
 
 describe('beforeLast()', () => {
 	test('returns null for list with 1 item', () => {
@@ -55,15 +63,15 @@ describe('beforeLastIndex()', () => {
 })
 
 test('callAll() calls all functions', () => {
-	const called = []
-	const calledWith = []
+	const called: TestStr[] = []
+	const calledWith: TestValue[][] = []
 
-	const fA = (...args) => {
+	const fA = (...args: TestValue[]) => {
 		called.push(A)
 		calledWith.push(args)
 	}
 
-	const fB = (...args) => {
+	const fB = (...args: TestValue[]) => {
 		called.push(B)
 		calledWith.push(args)
 	}
@@ -216,7 +224,7 @@ describe('replace()', () => {
 
 describe('withinRange()', () => {
 	test('with length excluded', () => {
-		const f = (i) => withinRange([A, B, C], i)
+		const f = (i: number) => withinRange([A, B, C], i)
 
 		expect(f(-1)).toEqual(false)
 		expect(f(0)).toEqual(true)
@@ -226,7 +234,7 @@ describe('withinRange()', () => {
 	})
 
 	test('with length included', () => {
-		const f = (i) => withinRange([A, B, C], i, true)
+		const f = (i: number) => withinRange([A, B, C], i, true)
 
 		expect(f(-1)).toEqual(false)
 		expect(f(0)).toEqual(true)
