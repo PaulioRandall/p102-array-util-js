@@ -1,7 +1,7 @@
 {
 	"license": "MIT",
 	"author": "Paul Williams",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"name": "@paulio/array-util-js",
 	"description": "P102: Personalised collection of functions for manipulating and querying JavaScript arrays",
 	"keywords": [
